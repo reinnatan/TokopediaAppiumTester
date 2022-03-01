@@ -2,5 +2,5 @@
 
 ```Java
  mvn package //download package
- running junit for testing class
+ junit //for testing class
 ```

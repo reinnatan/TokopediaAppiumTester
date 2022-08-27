@@ -20,10 +20,11 @@ public class FirstTestAppium {
 	
 	By skipBy = By.id("com.tokopedia.tkpd.df_base:id/skip_action");
 	By searchBy = By.id("com.tokopedia.tkpd:id/et_search");
-	By searchText = By.id("com.tokopedia.tkpd.df_base:id/searchTextView");
+	By searchText = By.id("com.tokopedia.tkpd:id/searchTextView");
 	By sortProduct = By.id("com.tokopedia.tkpd:id/sort_filter_prefix");
 	By lowerPriceProduct = By.id("com.tokopedia.tkpd:id/sortFilterChipsUnify");
 	By showAllProductFilter = By.id("com.tokopedia.tkpd:id/buttonApplySortFilter");
+	String stringSkipButtonId = "com.tokopedia.tkpd.df_base:id/skipDynamicOnbaording";
 	
 	@BeforeClass
 	public static void setup() throws Exception{
@@ -33,13 +34,18 @@ public class FirstTestAppium {
 		caps.setCapability("appPackage", "com.tokopedia.tkpd");
 		caps.setCapability("appActivity", "com.tokopedia.tkpd.ConsumerSplashScreen");
 		driver = new AndroidDriver<MobileElement>(new URL("http://127.0.0.1:4723/wd/hub"), caps);
-		wait = new WebDriverWait(driver, 10);
+		wait = new WebDriverWait(driver, 20);
 	}
 	
 	@Test
 	public void testApp() {
 		System.out.println("Testing is called");
-		wait.until(ExpectedConditions.visibilityOfElementLocated(skipBy)).click();
+		MobileElement skipButton = driver.findElementById(stringSkipButtonId);
+		if(skipButton.isDisplayed()){
+			skipButton.click();
+		}
+
+		//wait.until(ExpectedConditions.visibilityOfElementLocated(skipBy)).click();
 		wait.until(ExpectedConditions.visibilityOfElementLocated(searchBy)).click();
 		wait.until(ExpectedConditions.visibilityOfElementLocated(searchText)).sendKeys("sepeda gunung");
 		driver.pressKeyCode(AndroidKeyCode.ENTER);
